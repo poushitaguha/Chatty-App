@@ -3,44 +3,34 @@ import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 
 const ws = new WebSocket("ws://localhost:3001");
+const uuid = require('uuid/v4');
 
-function generateRandomId() {
-  let text = "";
-  let possible = "01234567";
-  for (let i = 0; i <= 7; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length))
-  }
-  return parseInt(text);
-}
+// function generateRandomId() {
+//   let text = "";
+//   let possible = "01234567";
+//   for (let i = 0; i <= 7; i++) {
+//     text += possible.charAt(Math.floor(Math.random() * possible.length))
+//   }
+//   return parseInt(text);
+// }
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        // {
-        //   username: "Bob",
-        //   content: "Has anyone seen my marbles?",
-        //   id: "BOB234627663"
-        // },
-        // {
-        //   username: "Anonymous",
-        //   content: "No, I think you lost them. You lost your marbles Bob. You lost them for good.",
-        //   id: "ANO999227621"
-        // },
-        // {
-        //   username: "Posh",
-        //   content: "How's everyone doing?",
-        //   id: "ANO999227614"
-        // }        
-      ]
+      id : uuid(),
+      messages: []  // messages coming from the server will be stored here as they arrive
     }
   }
 
   componentDidMount() {
     console.log("componentDidMount <App />");
     console.log("Connected to server");
+
+    ws.onmessage = (event) => {
+      console.log(event.data);
+    }
 
     setTimeout(() => {
       console.log("Simulating incoming message");
@@ -53,12 +43,12 @@ class App extends Component {
     }, 3000);
   }
 
-  addNewMessage = newMessageInput => {  
+  addNewMessage = (newMessageInput) => {  
     const oldMessages = this.state.messages;
     const newMessageObject = {
       username : this.state.currentUser.name,
       content : newMessageInput,
-      id : generateRandomId()
+      id : uuid()
     };
     const newMessages = [...oldMessages, newMessageObject];
     this.setState({ messages: newMessages });
