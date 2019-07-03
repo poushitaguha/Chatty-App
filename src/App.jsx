@@ -26,7 +26,12 @@ class App extends Component {
           username: "Anonymous",
           content: "No, I think you lost them. You lost your marbles Bob. You lost them for good.",
           id: "ANO999227621"
-        }
+        },
+        {
+          username: "Posh",
+          content: "How's everyone doing?",
+          id: "ANO999227614"
+        }        
       ]
     }
   }
