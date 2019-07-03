@@ -5,21 +5,11 @@ import MessageList from './MessageList.jsx';
 const ws = new WebSocket("ws://localhost:3001");
 const uuid = require('uuid/v4');
 
-// function generateRandomId() {
-//   let text = "";
-//   let possible = "01234567";
-//   for (let i = 0; i <= 7; i++) {
-//     text += possible.charAt(Math.floor(Math.random() * possible.length))
-//   }
-//   return parseInt(text);
-// }
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      id : uuid(),
       messages: []  // messages coming from the server will be stored here as they arrive
     }
   }
@@ -30,6 +20,11 @@ class App extends Component {
 
     ws.onmessage = (event) => {
       console.log(event.data);
+    // On receiving a message, add it to the list of messages
+      const message = JSON.parse(event.data);
+      const oldMessages = this.state.messages;
+      const newMessages = [...oldMessages, message];
+      this.setState({ messages: newMessages });
     }
 
     setTimeout(() => {
@@ -50,10 +45,7 @@ class App extends Component {
       content : newMessageInput,
       id : uuid()
     };
-    const newMessages = [...oldMessages, newMessageObject];
-    this.setState({ messages: newMessages });
-
-    const msg = JSON.stringify(newMessages);
+    const msg = JSON.stringify(newMessageObject);
     ws.send(msg);
   }
 
