@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 
+const ws = new WebSocket("ws://localhost:3001");
+
 function generateRandomId() {
   let text = "";
   let possible = "01234567";
@@ -17,45 +19,28 @@ class App extends Component {
     this.state = {
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [
-        {
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-          id: "BOB234627663"
-        },
-        {
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good.",
-          id: "ANO999227621"
-        },
-        {
-          username: "Posh",
-          content: "How's everyone doing?",
-          id: "ANO999227614"
-        }        
+        // {
+        //   username: "Bob",
+        //   content: "Has anyone seen my marbles?",
+        //   id: "BOB234627663"
+        // },
+        // {
+        //   username: "Anonymous",
+        //   content: "No, I think you lost them. You lost your marbles Bob. You lost them for good.",
+        //   id: "ANO999227621"
+        // },
+        // {
+        //   username: "Posh",
+        //   content: "How's everyone doing?",
+        //   id: "ANO999227614"
+        // }        
       ]
     }
   }
 
-  addNewMessage = newMessageInput => {  
-    const oldMessages = this.state.messages;
-    const newMessageObject = {
-      username : this.state.currentUser.name,
-      content : newMessageInput,
-      id : generateRandomId()
-    };
-    const newMessages = [...oldMessages, newMessageObject];
-    this.setState({ messages: newMessages });
-  }
-
   componentDidMount() {
     console.log("componentDidMount <App />");
-    
-    this.socket = new WebSocket("ws://localhost:3001");
     console.log("Connected to server");
-
-    // webSocket.onmessage = evt => {
-
-    // }  
 
     setTimeout(() => {
       console.log("Simulating incoming message");
@@ -68,6 +53,19 @@ class App extends Component {
     }, 3000);
   }
 
+  addNewMessage = newMessageInput => {  
+    const oldMessages = this.state.messages;
+    const newMessageObject = {
+      username : this.state.currentUser.name,
+      content : newMessageInput,
+      id : generateRandomId()
+    };
+    const newMessages = [...oldMessages, newMessageObject];
+    this.setState({ messages: newMessages });
+
+    const msg = JSON.stringify(newMessages);
+    ws.send(msg);
+  }
 
   render() {
     return (
