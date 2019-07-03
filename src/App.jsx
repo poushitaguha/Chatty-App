@@ -49,6 +49,14 @@ class App extends Component {
 
   componentDidMount() {
     console.log("componentDidMount <App />");
+    
+    this.socket = new WebSocket("ws://localhost:3001");
+    console.log("Connected to server");
+
+    // webSocket.onmessage = evt => {
+
+    // }  
+
     setTimeout(() => {
       console.log("Simulating incoming message");
       // Add a new message to the list of messages in the data store
@@ -65,7 +73,7 @@ class App extends Component {
     return (
       <div>
         <nav className="navbar">
-          <a href="/" className="navbar-brand">Chatty</a>
+          <a href="/" className="navbar-brand">CHATTY</a>
         </nav>
         <MessageList messages = {this.state.messages} />
         <ChatBar currentUser= {this.state.currentUser} addNewMessage={this.addNewMessage} />
