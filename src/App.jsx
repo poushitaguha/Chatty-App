@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: []  // messages coming from the server will be stored here as they arrive
     }
   }
@@ -38,16 +38,15 @@ class App extends Component {
     }, 3000);
   }
 
-  addNewMessage = (newMessageInput) => {  
-    const oldMessages = this.state.messages;
+  addNewMessage = (currentUser, newMessageInput) => {  
     const newMessageObject = {
-      username : this.state.currentUser.name,
+      username : currentUser,
       content : newMessageInput,
       id : uuid()
     };
     const msg = JSON.stringify(newMessageObject);
     ws.send(msg);
-  }
+  }  
 
   render() {
     return (
@@ -56,7 +55,7 @@ class App extends Component {
           <a href="/" className="navbar-brand">CHATTY</a>
         </nav>
         <MessageList messages = {this.state.messages} />
-        <ChatBar currentUser= {this.state.currentUser} addNewMessage={this.addNewMessage} />
+        <ChatBar currentUser= {this.state.currentUser} addNewMessage={this.addNewMessage} />        
       </div>    
     );
   }
