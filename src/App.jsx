@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 
-const uuid = require('uuid/v4');
+// const uuid = require('uuid/v4');
 const ws = new WebSocket("ws://localhost:3001");   
 
 class App extends Component {
@@ -11,7 +11,7 @@ class App extends Component {
     this.state = {
       currentUser: {name: "Anonymous"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],  // messages coming from the server will be stored here as they arrive
-      usersOnline : 0
+      clientCount : null
     }
   }
 
@@ -31,6 +31,11 @@ class App extends Component {
       let oldMessages = "";
       const incomingMessages = {};
       let newMessages = [];
+
+      if (Number.isInteger(message)) {
+        this.setState({ clientCount : message,
+                        messages : [...this.state.messages, message] });
+      }      
 
       switch(message.type) {
         case "incomingMessage":
@@ -57,8 +62,14 @@ class App extends Component {
           throw new Error("Unknown event type " + message.type);
       }
     }
+
+    ws.onclose = (event) => {
+      // console.log("Connected to server");
+    };
+
   }
 
+  // Method to add messages and send it to WebSocket Server
   addNewMessage = (currentUser, newMessageInput) => {
     let changedUser = currentUser;
     if (!currentUser) {
@@ -67,13 +78,14 @@ class App extends Component {
     const newMessageObject = {
       type: "postMessage",
       username : changedUser,
-      content : newMessageInput,
-      id : uuid()
+      content : newMessageInput
+      // id : uuid()
     };
     const msg = JSON.stringify(newMessageObject);
     ws.send(msg);
   }
 
+  // Method to send notification to WebSocket Server when a user changes their name
   changeUser = (newUser) => {
     let changedUser = newUser;
     if (!newUser) {
@@ -104,7 +116,7 @@ class App extends Component {
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">CHATTERBOX</a>
-          <p className="users-online">{this.state.usersOnline} user(s) online</p>
+          <p className="users-online">{this.state.clientCount} user(s) online</p>
         </nav>
         <MessageList messages = {this.state.messages} />
         <ChatBar addNewMessage={this.addNewMessage} changeUser={this.changeUser} /> 
