@@ -39,19 +39,23 @@ class App extends Component {
         case "incomingMessage":
         // handle incoming message
           oldMessages = this.state.messages;
-          incomingMessages.type = message.type;
-          incomingMessages.id = message.id;
-          incomingMessages.username = message.username;
-          incomingMessages.content = message.content;
+          incomingMessages = {
+            type : message.type,
+            id : message.id,
+            username : message.username,
+            content : message.content
+          };
           newMessages = [...oldMessages, incomingMessages];
           this.setState({ messages: newMessages });
           break;
         case "incomingNotification":
         // handle incoming notification
           oldMessages = this.state.messages;
-          incomingMessages.type = message.type;
-          incomingMessages.id = message.id;
-          incomingMessages.content = message.content;
+          incomingMessages = {
+            type : message.type,
+            id : message.id,
+            content : message.content
+          };
           newMessages = [...oldMessages, incomingMessages];
           this.setState({ messages: newMessages });
           break;
