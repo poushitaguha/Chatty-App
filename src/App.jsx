@@ -33,7 +33,6 @@ class App extends Component {
 
       if (Number.isInteger(message)) {
         this.setState({ clientCount : message });
-                        // messages : [...this.state.messages, message] });
       }      
 
       switch(message.type) {
