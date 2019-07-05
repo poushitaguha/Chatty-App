@@ -28,3 +28,6 @@ Chatty App is a simple, single-page REACT based communication app which allows u
 3. Go to http://localhost:3000/ in your browser.
 
 ### Screenshots
+
+![Chatty Home Page](https://github.com/poushitaguha/Chatty-App/blob/master/docs/chatty-home-page.png "Chatty Home Page")
+
