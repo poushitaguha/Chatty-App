@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 
-// const uuid = require('uuid/v4');
 const ws = new WebSocket("ws://localhost:3001");   
 
 class App extends Component {
@@ -33,8 +32,8 @@ class App extends Component {
       let newMessages = [];
 
       if (Number.isInteger(message)) {
-        this.setState({ clientCount : message,
-                        messages : [...this.state.messages, message] });
+        this.setState({ clientCount : message });
+                        // messages : [...this.state.messages, message] });
       }      
 
       switch(message.type) {
@@ -46,7 +45,7 @@ class App extends Component {
           incomingMessages.username = message.username;
           incomingMessages.content = message.content;
           newMessages = [...oldMessages, incomingMessages];
-          this.setState({ messages: newMessages});
+          this.setState({ messages: newMessages });
           break;
         case "incomingNotification":
         // handle incoming notification
@@ -63,10 +62,6 @@ class App extends Component {
       }
     }
 
-    ws.onclose = (event) => {
-      // console.log("Connected to server");
-    };
-
   }
 
   // Method to add messages and send it to WebSocket Server
@@ -79,7 +74,6 @@ class App extends Component {
       type: "postMessage",
       username : changedUser,
       content : newMessageInput
-      // id : uuid()
     };
     const msg = JSON.stringify(newMessageObject);
     ws.send(msg);
