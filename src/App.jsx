@@ -10,9 +10,21 @@ class App extends Component {
     this.state = {
       currentUser: {name: "Anonymous"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],  // messages coming from the server will be stored here as they arrive
-      clientCount : null
+      clientCount : null,
+      // color: this.getRandomColor()
+      color: null
     }
   }
+
+  // // Function to generate a random color for each client, used in state.
+  // getRandomColor() {
+  //   const letters = '0123456789ABCDEF';
+  //   let color = '#';
+  //   for (let i = 0; i < 6; i++) {
+  //     color += letters[Math.floor(Math.random() * 16)];
+  //   }
+  // return color;
+  // }
 
   componentDidMount() { 
     console.log("componentDidMount <App />");
@@ -39,23 +51,20 @@ class App extends Component {
         case "incomingMessage":
         // handle incoming message
           oldMessages = this.state.messages;
-          incomingMessages = {
-            type : message.type,
-            id : message.id,
-            username : message.username,
-            content : message.content
-          };
+          incomingMessages.type = message.type;
+          incomingMessages.id = message.id;
+          incomingMessages.username = message.username;
+          incomingMessages.content = message.content;
+          incomingMessages.color = message.color;
           newMessages = [...oldMessages, incomingMessages];
           this.setState({ messages: newMessages });
           break;
         case "incomingNotification":
         // handle incoming notification
           oldMessages = this.state.messages;
-          incomingMessages = {
-            type : message.type,
-            id : message.id,
-            content : message.content
-          };
+          incomingMessages.type = message.type;
+          incomingMessages.id = message.id;
+          incomingMessages.content = message.content;          
           newMessages = [...oldMessages, incomingMessages];
           this.setState({ messages: newMessages });
           break;
@@ -76,7 +85,8 @@ class App extends Component {
     const newMessageObject = {
       type: "postMessage",
       username : changedUser,
-      content : newMessageInput
+      content : newMessageInput,
+      color: this.state.color
     };
     const msg = JSON.stringify(newMessageObject);
     ws.send(msg);
