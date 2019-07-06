@@ -44,11 +44,12 @@ Multiple Users Exchanging Message -
 ![Multiple_Users_Exchanging_Message](https://github.com/poushitaguha/Chatty-App/blob/master/docs/multiple-users-exchanging-message.png "Multiple Users Exchanging Message")
 
 
-Number Of Users Online Displayed -
-
-![Number_Of_Users_Online_Displayed](https://github.com/poushitaguha/Chatty-App/blob/master/docs/number-of-users-online-displayed.png "Number Of Users Online Displayed")
-
-
 User Left Chat Displayed -
 
 ![User_Left_Chat_Displayed](https://github.com/poushitaguha/Chatty-App/blob/master/docs/user-left-chat.png "User Left Chat Displayed")
+
+
+Displaying Number Of Users Online With Specific Colors -
+
+![Displaying_Number_Of_Users_Online_With_Specific_Colors](https://github.com/poushitaguha/Chatty-App/blob/master/docs/displaying-number-of-users-and-their-colors.png "Displaying Number Of Users Online With Specific Colors")
+
