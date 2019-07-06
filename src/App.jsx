@@ -11,20 +11,9 @@ class App extends Component {
       currentUser: {name: "Anonymous"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],  // messages coming from the server will be stored here as they arrive
       clientCount : null,
-      // color: this.getRandomColor()
       color: null
     }
   }
-
-  // // Function to generate a random color for each client, used in state.
-  // getRandomColor() {
-  //   const letters = '0123456789ABCDEF';
-  //   let color = '#';
-  //   for (let i = 0; i < 6; i++) {
-  //     color += letters[Math.floor(Math.random() * 16)];
-  //   }
-  // return color;
-  // }
 
   componentDidMount() { 
     console.log("componentDidMount <App />");
@@ -126,7 +115,7 @@ class App extends Component {
           <p className="users-online">{this.state.clientCount} user(s) online</p>
         </nav>
         <MessageList messages = {this.state.messages} />
-        <ChatBar addNewMessage={this.addNewMessage} changeUser={this.changeUser} /> 
+        <ChatBar currentUser= {this.state.currentUser} addNewMessage={this.addNewMessage} changeUser={this.changeUser} /> 
       </div>    
     );
   }

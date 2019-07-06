@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 class ChatBar extends Component {
-  _handleKeyDown = (e) => {
+  _addNewMessage = (e) => {
     if (e.key === 'Enter') {
       let newMessageInput = "";
       newMessageInput = e.target.value;
@@ -22,8 +22,8 @@ class ChatBar extends Component {
   render() {
     return (
         <footer className="chatbar">
-          <input className="chatbar-username" id="username" onKeyDown={this._changeUser} placeholder="Your Name (Optional)" />
-          <input className="chatbar-message" onKeyDown={this._handleKeyDown} placeholder="Type a message and hit ENTER" />
+          <input className="chatbar-username" id="username" value={this.props.currentUser.name} onKeyDown={this._changeUser} placeholder="Your Name (Optional)" />
+          <input className="chatbar-message" onKeyDown={this._addNewMessage} placeholder="Type a message and hit ENTER" />
         </footer>  
     );
   }
