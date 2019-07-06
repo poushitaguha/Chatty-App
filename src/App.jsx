@@ -115,7 +115,7 @@ class App extends Component {
           <p className="users-online">{this.state.clientCount} user(s) online</p>
         </nav>
         <MessageList messages = {this.state.messages} />
-        <ChatBar currentUser= {this.state.currentUser} addNewMessage={this.addNewMessage} changeUser={this.changeUser} /> 
+        <ChatBar addNewMessage={this.addNewMessage} changeUser={this.changeUser} /> 
       </div>    
     );
   }
