@@ -17,9 +17,11 @@ Chatty App is a simple, single-page REACT based communication app which allows u
 - sockjs-client
 - style-loader
 - webpack
-- webpack-dev-server
+- webpack-dev-server  
+- express
 - react
 - react-dom
+- ws
 
 ### Getting Started
 
